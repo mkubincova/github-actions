@@ -24,15 +24,15 @@ jobs:
     # run test on multiple versions of node
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [16.x, 18.x, 20.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       # checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
-    - uses: actions/checkout@v2 
+    - uses: actions/checkout@main
     - name: Use Node.js ${{ matrix.node-version }}
       # sets up nodejs environment
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
