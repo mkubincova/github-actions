@@ -1,8 +1,15 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# This workflow will do: 
+# 1. a clean install of node dependencies, 
+# 2. cache/restore them, 
+# 3. build the source code and 
+# 4. run tests across different versions of node
+
+# For more information see: 
+# https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: Node.js CI
 
+# trigger workflow
 on:
   push:
     branches: [ main ]
@@ -11,20 +18,25 @@ on:
 
 jobs:
   build:
-
+    # platform to run this job
     runs-on: ubuntu-latest
 
+    # run test on multiple versions of node
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x, 16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
+      # checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
+    - uses: actions/checkout@v2 
     - name: Use Node.js ${{ matrix.node-version }}
+      # sets up nodejs environment
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+      # clean install dependecies
     - run: npm ci
+      # run test command from package.json in testing environment
     - run: npm test
